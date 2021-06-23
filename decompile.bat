@@ -53,7 +53,16 @@ for %%A in ("%OUTPUT%\dexes"\*.dex) do (
 echo %1 decompiled classes to file://%OUTPUT%/outputJars/*.jar
 
 set /p choice= Do you want to open jd-gui right now?(Y/N)
-if "%choice%"=="Y" call  %JD_GUI% &
+if "%choice%"=="Y" goto openJarsWithJDgUI 
+goto mainEnd
+
+:openJarsWithJDgUI
+set JP=
+for %%X in ("%OUTPUT%"\outputJars\*.jar) do (
+    set JP=%JP% %%X
+)
+echo "%JP%"
+call  %JD_GUI% %JP% &
 goto mainEnd
 
 :fail
