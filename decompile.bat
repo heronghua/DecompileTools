@@ -24,7 +24,7 @@ set DEX2JAR=%~dp0/dex2jar-2.0/d2j-dex2jar.bat
 
 set JD_GUI=%~dp0/jd-gui.exe
 set HAO_ZIPC=HaoZipC
-set URAR=unrar .exe
+set URAR=WinRaR.exe
 
 @rem extract classes
 java -jar %APK_TOOL_JAR% d -f %1 -o %OUTPUT%
@@ -53,10 +53,10 @@ for %%A in ("%OUTPUT%\dexes"\*.dex) do (
 echo %1 decompiled classes to file://%OUTPUT%/outputJars/*.jar
 
 set /p choice= Do you want to open jd-gui right now?(Y/N)
-if "%choice%"=="Y" goto openJarsWithJDgUI 
+if "%choice%"=="Y" goto openJarsWithJDGUI 
 goto mainEnd
 
-:openJarsWithJDgUI
+:openJarsWithJDGUI
 set JP=
 for %%X in ("%OUTPUT%"\outputJars\*.jar) do (
     set JP=%JP% %%X
