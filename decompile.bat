@@ -23,26 +23,18 @@ set APK_TOOL_JAR=%~dp0/apktool_2.5.0.jar
 set DEX2JAR=%~dp0/dex2jar-2.0/d2j-dex2jar.bat
 
 set JD_GUI=%~dp0/jd-gui.exe
-set HAO_ZIPC=HaoZipC
-set URAR=WinRaR.exe
+
 
 @rem extract classes
 java -jar %APK_TOOL_JAR% d -f %1 -o %OUTPUT%
-if "%ERRORLEVEL%" == "0" goto extractDexFromApkByHaoZip
+if "%ERRORLEVEL%" == "0" goto extractDexFromApk
 echo apkTool decode apk failed
 goto fail
 
-:extractDexFromApkByHaoZip
-%HAO_ZIPC% e %1 -o%OUTPUT%/dexes/ *.dex
+:extractDexFromApk
+call extractCompressFileImpl.bat %1 *.dex "%OUTPUT%"/dexes/
 if "%ERRORLEVEL%" == "0" goto convertDexFilesToJars
-echo Warning ,you do not install HaoZip
-goto extractDexFromApkByRar
-
-:extractDexFromApkByRar
-%URAR% x %1 *.dex %OUTPUT%/dexes/
-if "%ERRORLEVEL%" == "0" goto convertDexFilesToJars
-echo Error , you neither installed zip nor rar
-goto fail
+echo extract dex file failed
 
 :convertDexFilesToJars
 for %%A in ("%OUTPUT%\dexes"\*.dex) do (
